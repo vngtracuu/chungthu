@@ -3,19 +3,111 @@
 <head>
   <meta charset="UTF-8">
   <title>Tra cứu Chứng Thư</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f9;
+      margin: 0;
+      padding: 40px;
+      color: #333;
+    }
+    .container {
+      max-width: 900px;
+      margin: auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #2c3e50;
+    }
+    input, button {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+    input {
+      border: 1px solid #ccc;
+    }
+    button {
+      background: #3498db;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background: #2980b9;
+    }
+    .result {
+      margin-top: 25px;
+      padding: 20px;
+      border-top: 1px solid #eee;
+    }
+    iframe {
+      width: 100%;
+      height: 500px;
+      border: none;
+      margin-top: 20px;
+    }
+    .note {
+      text-align: center;
+      margin-top: 20px;
+      font-weight: bold;
+      color: #e67e22;
+    }
+    .qr {
+      text-align: center;
+      margin-top: 20px;
+    }
+    .qr img {
+      max-width: 200px;
+    }
+  </style>
 </head>
 <body>
-  <h1>Tra cứu Chứng Thư</h1>
-  <form onsubmit="searchDoc(); return false;">
-    <input type="text" id="docId" placeholder="Nhập mã chứng thư" required />
-    <button type="submit">Tra cứu</button>
-  </form>
+  <div class="container">
+    <h1>Tra cứu Chứng Thư</h1>
+    <input type="text" id="docId" placeholder="Nhập mã chứng thư (ví dụ: CTV25121113)">
+    <button onclick="traCuu()">Tra cứu</button>
+    <div id="result" class="result"></div>
+  </div>
 
   <script>
-    function searchDoc() {
+    async function traCuu() {
       const id = document.getElementById('docId').value.trim();
-      if (!id) return alert('Vui lòng nhập mã');
-      window.location.href = `/api/docs-page/${id}`;
+      if (!id) {
+        document.getElementById('result').innerHTML = '<p>Vui lòng nhập mã chứng thư</p>';
+        return;
+      }
+
+      // Lấy dữ liệu từ API docs
+      const res = await fetch('/api/docs/' + id);
+      if (!res.ok) {
+        document.getElementById('result').innerHTML = '<p>Không tìm thấy chứng thư</p>';
+        return;
+      }
+      const doc = await res.json();
+
+      // Lấy QR code từ API qrcode
+      const qrRes = await fetch('/api/qrcode/' + id);
+      const qrHtml = await qrRes.text();
+
+      // Chuyển link Google Drive sang dạng preview
+      const previewUrl = doc.url.replace('/view', '/preview');
+
+      // Render chi tiết nội dung tài liệu
+      document.getElementById('result').innerHTML = `
+        <h2>${doc.name}</h2>
+        <div class="qr">${qrHtml}</div>
+        <iframe src="${previewUrl}" allow="autoplay"></iframe>
+        <p class="note">Bạn đang xem nội dung với phân quyền cấp 2</p>
+      `;
     }
   </script>
 </body>
