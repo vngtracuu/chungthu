@@ -102,12 +102,14 @@
       font-family: Arial, sans-serif;
     }
     .doc-frame {
+      position: relative;
       border: 1px solid #bbb;
       border-radius: 10px;
       background: #fff; /* nền trắng bên trong khung */
       padding: 15px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
       transition: border-color 0.3s;
+      overflow: hidden;
     }
     .doc-frame:hover {
       border-color: #888;
@@ -117,6 +119,18 @@
       height: 600px;
       border: none;
       background: #fff;
+    }
+    /* Watermark */
+    .doc-frame::before {
+      content: "DRAF";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-30deg);
+      font-size: 100px;
+      color: rgba(0, 0, 0, 0.1); /* mờ */
+      white-space: nowrap;
+      pointer-events: none;
     }
   </style>
 </head>
