@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Tra cứu Chứng Thư</title>
+</head>
+<body>
+  <h1>Tra cứu Chứng Thư</h1>
+  <form onsubmit="searchDoc(); return false;">
+    <input type="text" id="docId" placeholder="Nhập mã chứng thư" required />
+    <button type="submit">Tra cứu</button>
+  </form>
+
+  <script>
+    function searchDoc() {
+      const id = document.getElementById('docId').value.trim();
+      if (!id) return alert('Vui lòng nhập mã');
+      window.location.href = `/api/docs-page/${id}`;
+    }
+  </script>
+</body>
+</html>
