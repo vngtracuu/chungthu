@@ -63,7 +63,7 @@
     }
     .qr {
       text-align: center;
-      margin-top: 20px;
+      margin-bottom: 20px;
     }
     .qr img {
       max-width: 200px;
@@ -73,7 +73,7 @@
 <body>
   <div class="container">
     <h1>Tra cứu Chứng Thư</h1>
-    <input type="text" id="docId" placeholder="Nhập mã chứng thư (ví dụ: CTV25121113)">
+    <input type="text" id="docId" placeholder="Nhập mã chứng thư (ví dụ: CTV26010081)">
     <button onclick="traCuu()">Tra cứu</button>
     <div id="result" class="result"></div>
   </div>
@@ -101,10 +101,10 @@
       // Chuyển link Google Drive sang dạng preview
       const previewUrl = doc.url.replace('/view', '/preview');
 
-      // Render chi tiết nội dung tài liệu
+      // Render kết quả: QR code trước, sau đó tên chứng thư, rồi nội dung
       document.getElementById('result').innerHTML = `
-        <h2>${doc.name}</h2>
         <div class="qr">${qrHtml}</div>
+        <h2>${doc.name}</h2>
         <iframe src="${previewUrl}" allow="autoplay"></iframe>
         <p class="note">Bạn đang xem nội dung với phân quyền cấp 2</p>
       `;
