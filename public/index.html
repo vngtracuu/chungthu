@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <title>Tra cứu Chứng Thư</title>
+  <title>TRA CỨU CHỨNG THƯ</title>
   <style>
     body {
       font-family: "Segoe UI", Arial, sans-serif;
@@ -12,36 +12,47 @@
       color: #333;
     }
     .container {
-      max-width: 900px;
+      max-width: 1000px;
       margin: auto;
       background: #fff;
       padding: 30px;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      border-radius: 10px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.15);
     }
     h1 {
       text-align: center;
       margin-bottom: 25px;
-      color: #2c3e50;
+      color: #3498db;
+      font-weight: bold;
+      text-transform: uppercase;
     }
-    input, button {
+    input {
       width: 100%;
       padding: 12px;
-      margin-bottom: 15px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
       border-radius: 6px;
       font-size: 16px;
     }
-    input {
-      border: 1px solid #ccc;
+    .button-group {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
     }
-    button {
+    .button-group button {
+      flex: 1;
+      margin: 0 5px;
+      padding: 12px;
       background: #3498db;
       color: #fff;
       border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: bold;
       cursor: pointer;
       transition: background 0.3s;
     }
-    button:hover {
+    .button-group button:hover {
       background: #2980b9;
     }
     .notice {
@@ -69,9 +80,9 @@
     }
     .doc-frame {
       border: 2px solid #2c3e50;
-      border-radius: 8px;
-      background: #fafafa;
-      padding: 10px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #fdfcfb, #e2d1c3); /* luxury gradient */
+      padding: 15px;
     }
     iframe {
       width: 100%;
@@ -83,10 +94,13 @@
 </head>
 <body>
   <div class="container">
-    <h1>Tra cứu Chứng Thư</h1>
+    <h1>TRA CỨU CHỨNG THƯ</h1>
     <input type="text" id="docId" placeholder="Nhập mã chứng thư (ví dụ: CTV26010081)">
-    <button onclick="traCuu()">Tra cứu</button>
-    <!-- Thông báo phân quyền cấp 3 -->
+    <div class="button-group">
+      <button onclick="quayLai()">QUAY LẠI</button>
+      <button onclick="traCuu()">TRA CỨU</button>
+      <button onclick="thoat()">THOÁT</button>
+    </div>
     <div class="notice">
       Bạn đang xem nội dung với phân quyền cấp 3, mọi hình thức sao chụp tài liệu đều là không được phép
     </div>
@@ -94,6 +108,12 @@
   </div>
 
   <script>
+    function quayLai() {
+      window.history.back();
+    }
+    function thoat() {
+      window.close();
+    }
     async function traCuu() {
       const id = document.getElementById('docId').value.trim();
       if (!id) {
@@ -101,7 +121,6 @@
         return;
       }
 
-      // Lấy dữ liệu từ API docs
       const res = await fetch('/api/docs/' + id);
       if (!res.ok) {
         document.getElementById('result').innerHTML = '<p>Không tìm thấy chứng thư</p>';
@@ -109,14 +128,11 @@
       }
       const doc = await res.json();
 
-      // Lấy QR code từ API qrcode
       const qrRes = await fetch('/api/qrcode/' + id);
       const qrHtml = await qrRes.text();
 
-      // Chuyển link Google Drive sang dạng preview
       const previewUrl = doc.url.replace('/view', '/preview');
 
-      // Render kết quả: QR code + tiêu đề riêng, khung chỉ bao quanh iframe
       document.getElementById('result').innerHTML = `
         <div class="qr">${qrHtml}</div>
         <div class="doc-title">${doc.name}</div>
