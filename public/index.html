@@ -53,14 +53,6 @@
     }
     .result {
       margin-top: 25px;
-      padding: 20px;
-      border: 2px solid #2c3e50;
-      border-radius: 8px;
-      background: #fafafa;
-    }
-    .result-header {
-      text-align: center;
-      margin-bottom: 20px;
     }
     .qr {
       text-align: center;
@@ -68,6 +60,18 @@
     }
     .qr img {
       max-width: 200px;
+    }
+    .doc-title {
+      text-align: center;
+      font-weight: bold;
+      margin-bottom: 15px;
+      color: #2c3e50;
+    }
+    .doc-frame {
+      border: 2px solid #2c3e50;
+      border-radius: 8px;
+      background: #fafafa;
+      padding: 10px;
     }
     iframe {
       width: 100%;
@@ -112,11 +116,13 @@
       // Chuyển link Google Drive sang dạng preview
       const previewUrl = doc.url.replace('/view', '/preview');
 
-      // Render kết quả: QR code trước, sau đó iframe nội dung tài liệu
+      // Render kết quả: QR code + tiêu đề riêng, khung chỉ bao quanh iframe
       document.getElementById('result').innerHTML = `
         <div class="qr">${qrHtml}</div>
-        <div class="result-header"><strong>${doc.name}</strong></div>
-        <iframe src="${previewUrl}" allow="autoplay"></iframe>
+        <div class="doc-title">${doc.name}</div>
+        <div class="doc-frame">
+          <iframe src="${previewUrl}" allow="autoplay"></iframe>
+        </div>
       `;
     }
   </script>
