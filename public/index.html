@@ -196,6 +196,16 @@
         </div>
       `;
     }
+
+    // ✅ Tự động tra cứu nếu có docId trong URL
+    window.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      const docId = params.get('docId');
+      if (docId) {
+        document.getElementById('docId').value = docId;
+        traCuu(); // tự động tra cứu ngay
+      }
+    });
   </script>
 </body>
 </html>
