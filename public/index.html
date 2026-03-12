@@ -8,20 +8,12 @@
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 40px;
-      background: #f4f6f9;
+      background: #f4f6f9; /* nền sáng đơn giản */
       color: #333;
-    }
-    .container {
-      max-width: 1000px;
-      margin: auto;
-      background: #fff;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 6px 16px rgba(0,0,0,0.1);
     }
     h1 {
       text-align: center;
-      margin-bottom: 30px;
+      margin: 40px 0 30px 0;
       color: #004080; /* xanh đậm */
       font-weight: bold;
       font-size: 28px;
@@ -32,14 +24,15 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 20px;
-      width: 100%;
+      margin: 0 auto 20px auto;
+      width: 90%;
     }
     .input-group label {
       font-weight: bold;
       color: #2c3e50;
       flex: 1;
       font-size: 18px;
+      text-align: left;
     }
     .input-group input {
       flex: 2;
@@ -52,8 +45,8 @@
     .button-group {
       display: flex;
       justify-content: space-between;
-      margin-bottom: 15px;
-      width: 100%;
+      margin: 0 auto 15px auto;
+      width: 90%;
     }
     .button-group button {
       flex: 1;
@@ -76,17 +69,16 @@
       text-align: center;
       color: red;
       font-weight: bold;
-      margin: 15px 0;
+      margin: 15px auto;
       font-size: 15px;
       font-family: Arial, sans-serif;
+      width: 90%;
     }
 
-    /* Vùng hiển thị dữ liệu */
     .result {
-      margin-top: 25px;
+      margin: 25px auto;
+      width: 90%;
       padding: 20px;
-      border-radius: 10px;
-      background: linear-gradient(135deg, #fff8dc, #f0e68c); /* vàng luxury */
     }
     .qr {
       text-align: center;
@@ -129,22 +121,20 @@
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>TRA CỨU CHỨNG THƯ</h1>
-    <div class="input-group">
-      <label for="docId">Nhập mã chứng thư:</label>
-      <input type="text" id="docId" placeholder="Ví dụ: CTV26010081">
-    </div>
-    <div class="button-group">
-      <button onclick="quayLai()">QUAY LẠI</button>
-      <button onclick="traCuu()">TRA CỨU</button>
-      <button onclick="thoat()">THOÁT</button>
-    </div>
-    <div class="notice">
-      Bạn đang xem với phân quyền cấp 3, mọi hành động sao chép, chụp hình tài liệu không có sự đồng ý của chúng tôi đều là vi phạm pháp luật
-    </div>
-    <div id="result" class="result"></div>
+  <h1>TRA CỨU CHỨNG THƯ</h1>
+  <div class="input-group">
+    <label for="docId">Nhập mã chứng thư:</label>
+    <input type="text" id="docId" placeholder="Ví dụ: CTV26010081">
   </div>
+  <div class="button-group">
+    <button onclick="quayLai()">QUAY LẠI</button>
+    <button onclick="traCuu()">TRA CỨU</button>
+    <button onclick="thoat()">THOÁT</button>
+  </div>
+  <div class="notice">
+    Bạn đang xem với phân quyền cấp 3, mọi hành động sao chép, chụp hình tài liệu không có sự đồng ý của chúng tôi đều là vi phạm pháp luật
+  </div>
+  <div id="result" class="result"></div>
 
   <script>
     function quayLai() {
