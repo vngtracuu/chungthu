@@ -7,6 +7,9 @@ module.exports = (req, res) => {
   if (!doc) {
     res.status(404).send('<h1>Not found</h1>');
   } else {
-    res.status(200).send(`<h1>${doc.title}</h1><p>${doc.content}</p>`);
+    res.status(200).send(`
+      <h1>${doc.name}</h1>
+      <p><a href="${doc.url}" target="_blank">Xem chứng thư</a></p>
+    `);
   }
 };

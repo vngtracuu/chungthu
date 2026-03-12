@@ -11,8 +11,8 @@ module.exports = async (req, res) => {
   }
 
   try {
-    const qr = await QRCode.toDataURL(JSON.stringify(doc));
-    res.status(200).send(`<img src="${qr}" />`);
+    const qr = await QRCode.toDataURL(doc.url);
+    res.status(200).send(`<h1>${doc.name}</h1><img src="${qr}" />`);
   } catch (err) {
     res.status(500).json({ error: 'QR generation failed' });
   }
