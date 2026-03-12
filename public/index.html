@@ -51,7 +51,7 @@
     }
     iframe {
       width: 100%;
-      height: 500px;
+      height: 600px;
       border: none;
       margin-top: 20px;
     }
@@ -101,10 +101,9 @@
       // Chuyển link Google Drive sang dạng preview
       const previewUrl = doc.url.replace('/view', '/preview');
 
-      // Render kết quả: QR code trước, sau đó tên chứng thư, rồi nội dung
+      // Render kết quả: QR code trước, sau đó iframe nội dung tài liệu
       document.getElementById('result').innerHTML = `
         <div class="qr">${qrHtml}</div>
-        <h2>${doc.name}</h2>
         <iframe src="${previewUrl}" allow="autoplay"></iframe>
         <p class="note">Bạn đang xem nội dung với phân quyền cấp 2</p>
       `;
