@@ -1,17 +1,24 @@
-const QRCode = require('qrcode');
-const data = require('../../data.json');
+const QRCode = require("qrcode");
 
 module.exports = async (req, res) => {
   const { id } = req.query;
-  const doc = data.find(d => d.id.toLowerCase() === id.toLowerCase().trim());
+
+  const data = [
+    { id: "CTV25121113", title: "Chứng thư A" },
+    { id: "XYZ123", title: "Chứng thư B" }
+  ];
+
+  const doc = data.find(d => d.id === id);
 
   if (!doc) {
-    return res.status(404).json({ error: 'Không tìm thấy tài liệu' });
+    res.status(404).json({ error: "Not found" });
+    return;
   }
 
-  const docLink = `https://${req.headers.host}/api/docs-page/${doc.id}`;
-  const qrPng = await QRCode.toBuffer(docLink);
-
-  res.setHeader('Content-Type', 'image/png');
-  res.send(qrPng);
+  try {
+    const qr = await QRCode.toDataURL(JSON.stringify(doc));
+    res.status(200).send(`<img src="${qr}" />`);
+  } catch (err) {
+    res.status(500).json({ error: "QR generation failed" });
+  }
 };
