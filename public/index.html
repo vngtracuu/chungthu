@@ -157,11 +157,22 @@
       }
       const doc = await res.json();
 
+      // Lấy QR code
       const qrRes = await fetch('/api/qrcode/' + id);
-      const qrHtml = await qrRes.text();
+      let qrHtml = await qrRes.text();
+
+      // ✅ Lọc bỏ mọi đoạn <p>…</p> nếu có
+      qrHtml = qrHtml.replace(/<p[^>]*>.*?<\/p>/gi, '');
+
+      // ✅ Chỉ giữ lại thẻ <img> đầu tiên
+      const match = qrHtml.match(/<img[^>]*>/i);
+      if (match) {
+        qrHtml = match[0];
+      }
 
       const previewUrl = doc.url.replace('/view', '/preview');
 
+      // Render đúng bố cục: QR → nét gạch → tên chứng thư → khung tài liệu
       document.getElementById('result').innerHTML = `
         <div class="qr">${qrHtml}</div>
         <div class="divider"></div>
