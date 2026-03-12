@@ -44,6 +44,12 @@
     button:hover {
       background: #2980b9;
     }
+    .notice {
+      text-align: center;
+      color: red;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
     .result {
       margin-top: 25px;
       padding: 20px;
@@ -54,12 +60,6 @@
       height: 600px;
       border: none;
       margin-top: 20px;
-    }
-    .note {
-      text-align: center;
-      margin-top: 20px;
-      font-weight: bold;
-      color: #e67e22;
     }
     .qr {
       text-align: center;
@@ -75,6 +75,10 @@
     <h1>Tra cứu Chứng Thư</h1>
     <input type="text" id="docId" placeholder="Nhập mã chứng thư (ví dụ: CTV26010081)">
     <button onclick="traCuu()">Tra cứu</button>
+    <!-- Thông báo phân quyền cấp 3 -->
+    <div class="notice">
+      Bạn đang xem nội dung với phân quyền cấp 3, mọi hình thức sao chụp tài liệu đều là không được phép
+    </div>
     <div id="result" class="result"></div>
   </div>
 
@@ -105,7 +109,6 @@
       document.getElementById('result').innerHTML = `
         <div class="qr">${qrHtml}</div>
         <iframe src="${previewUrl}" allow="autoplay"></iframe>
-        <p class="note">Bạn đang xem nội dung với phân quyền cấp 2</p>
       `;
     }
   </script>
